@@ -535,6 +535,12 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataPipeLineSSHClient\SSHWrapper.csproj">
+      <Project>{ec100204-f2a0-423e-9aaf-ae3073e3606d}</Project>
+      <Name>SSHWrapper</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Migrations\201508310051445_MySQL.resx">
       <DependentUpon>201508310051445_MySQL.cs</DependentUpon>
     </EmbeddedResource>
@@ -574,12 +580,6 @@
     <EmbeddedResource Include="Migrations\201609080803134_Update_PotentialCustomer.resx">
       <DependentUpon>201609080803134_Update_PotentialCustomer.cs</DependentUpon>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DataPipeLineSSHClient\SSHWrapper.csproj">
-      <Project>{ec100204-f2a0-423e-9aaf-ae3073e3606d}</Project>
-      <Name>SSHWrapper</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
