@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSHWrapper", "DataPipeLineSSHClient\SSHWrapper.csproj", "{EC100204-F2A0-423E-9AAF-AE3073E3606D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnterpriseDataPipeline", "EnterpriseDataPipeline\EnterpriseDataPipeline.csproj", "{C27CE1EE-7BA5-4AED-912F-6FADA45EE8C5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC100204-F2A0-423E-9AAF-AE3073E3606D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC100204-F2A0-423E-9AAF-AE3073E3606D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC100204-F2A0-423E-9AAF-AE3073E3606D}.Debug|x64.ActiveCfg = Release|Any CPU
+		{EC100204-F2A0-423E-9AAF-AE3073E3606D}.Debug|x64.Build.0 = Release|Any CPU
+		{EC100204-F2A0-423E-9AAF-AE3073E3606D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC100204-F2A0-423E-9AAF-AE3073E3606D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC100204-F2A0-423E-9AAF-AE3073E3606D}.Release|x64.ActiveCfg = Release|Any CPU
+		{EC100204-F2A0-423E-9AAF-AE3073E3606D}.Release|x64.Build.0 = Release|Any CPU
+		{C27CE1EE-7BA5-4AED-912F-6FADA45EE8C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C27CE1EE-7BA5-4AED-912F-6FADA45EE8C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C27CE1EE-7BA5-4AED-912F-6FADA45EE8C5}.Debug|x64.ActiveCfg = Release|Any CPU
+		{C27CE1EE-7BA5-4AED-912F-6FADA45EE8C5}.Debug|x64.Build.0 = Release|Any CPU
+		{C27CE1EE-7BA5-4AED-912F-6FADA45EE8C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C27CE1EE-7BA5-4AED-912F-6FADA45EE8C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C27CE1EE-7BA5-4AED-912F-6FADA45EE8C5}.Release|x64.ActiveCfg = Release|x64
+		{C27CE1EE-7BA5-4AED-912F-6FADA45EE8C5}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

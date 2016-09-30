@@ -1,0 +1,14 @@
+﻿<h2>Basic File Upload</h2>
+@using (Html.BeginForm("Index",
+                                    "PuppetPEM",
+                                    FormMethod.Post,
+                                    new { enctype = "multipart/form-data" }))
+{
+    <label for="file">Upload Puppet PEM File:</label>
+    <input type="file" name="file" id="file" style="width: auto"/><br><br>
+    <input type="submit" value="Upload File" />
+    <br><br>
+    @ViewBag.Message
+}
+
+

@@ -1,0 +1,336 @@
+﻿@using EnterpriseDataPipeline.Models
+@using EnterpriseDataPipeline.ViewModel;
+@using System.Web.UI.WebControls; 
+@model StorageViewModel
+@{
+    ViewBag.Title = "SV4U Enterprise Data PipeLine";
+    ViewBag.SourceDB = "BooksDB";
+    ViewBag.DestinationDB = "BooksDB";
+}
+
+
+
+<script>
+
+    $(document).ready(function () {
+        $("body").css("background-color", "#F3F3F3")
+        //$("#lbSourceTable").hide(); //hide the listbox for table by default
+        //$("#lbDestinationTable").hide(); //hide the listbox for table by default
+
+        $("select").removeAttr("multiple");
+
+        //debugger;   //Added by Anthony Lai to debug javascript; must be removed after debug is done
+
+        //get source database
+        $("#ddlSource").bind("change", function () {
+            //debugger;
+            $("#lbSourceTableError").css('visibility', 'hidden');
+            $("#ddlSourceDB").css('visibility', 'hidden');
+            $("#lbSourceTable").css('visibility', 'hidden');
+            $("#ddlSourceDB").empty();
+            $("#lbSourceTable").empty();
+
+
+            var divSourceDB = $("#ddlSourceDB");
+            var SelSource = $("#ddlSource").val();
+            //var SelSourceDB = $("#ddlSourceDB").val();
+            var SelSourceDB = '@ViewBag.SourceDB';
+            var url = '@Url.Action("GetDB", "Job")';
+            $.get(url, { storage: SelSource }, 
+                function (data) {
+                    //debugger;
+                    if (data.success) {
+                        // Success, execute js code here
+                        //divSourceDB.empty();
+                        if (data.val.length > 0) {
+                            SelSourceDB = data.val[data.val.length - 1][0];   //Get the default destination database here
+
+                            for (var i = 0; i < data.val.length-1; i++) {
+                                //if (i == 0)
+                                if (data.val[i] == SelSourceDB) {
+                                    //SelSourceDB = data.val[i];
+                                    divSourceDB.append('<option value="' + data.val[i] + '" selected="selected">' + data.val[i] + '</option>');
+                                }
+                                else
+                                    divSourceDB.append('<option value="' + data.val[i] + '">' + data.val[i] + '</option>');
+                            }
+                            divSourceDB.css('visibility', 'visible');
+                        }
+                        $("#ddlSourceDB").trigger("change");    //trigger a change to dropdownlist for source database and load its corresponding tables
+                    }
+                    else {
+                        // Error, execute js code here
+                        $("#lbSourceTableError").html(data.val);
+                        $("#lbSourceTableError").css('visibility', 'visible');
+                        divSourceDB.css('visibility', 'hidden');
+                    }
+                });
+        });
+        $("#ddlSource").trigger("change");
+
+
+        //get source table
+        $("#ddlSourceDB").bind("change", function () {
+            //debugger;
+            $("#lbSourceTableError").css('visibility', 'hidden');
+            $("#lbSourceTable").css('visibility', 'hidden');
+
+            var divSourceTable = $("#lbSourceTable");
+            var SelSource = $("#ddlSource").val();
+            var SelSourceDB = $("#ddlSourceDB").val();
+            if (SelSourceDB == null) {
+                SelSourceDB = '@ViewBag.SourceDB';
+            }
+            var url = '@Url.Action("GetDBTable", "Job")';
+            $.get(url, { storage: SelSource, database: SelSourceDB }, 
+                function (data) {
+                    //debugger;
+                    if (data.success) {
+                        // Success, execute js code here
+                        divSourceTable.empty();
+                        for (var i = 0; i < data.val.length; i++)
+                        {
+                            if (i == 0)
+                            {
+                                divSourceTable.append('<option value="' + data.val[i] + '" selected="selected">' + data.val[i] + '</option>');
+                            }
+                            else
+                                divSourceTable.append('<option value="' + data.val[i] + '">' + data.val[i] + '</option>');
+                        }
+
+                        divSourceTable.css('visibility', 'visible');
+                    }
+                    else {
+                        // Error, execute js code here
+                        $("#lbSourceTableError").html(data.val);
+                        $("#lbSourceTableError").css('visibility', 'visible');
+                        divSourceTable.css('visibility', 'hidden');
+                    }
+                });
+        });
+        $("#ddlSourceDB").trigger("change");
+
+
+        //get destination database
+        $("#ddlDestination").bind("change", function () {
+
+            $("#lbDestinationTableError").css('visibility', 'hidden');
+            $("#ddlDestinationDB").css('visibility', 'hidden');
+            $("#lbDestinationTable").css('visibility', 'hidden');
+            $("#ddlDestinationDB").empty();
+            $("#lbDestinationTable").empty();
+
+            var divDestinationDB = $("#ddlDestinationDB");
+            var SelDestination = $("#ddlDestination").val();
+            @*var url = '@Url.Action("GetDBTable", "Job")';*@
+            var SelDestinationDB = '@ViewBag.DestinationDB';
+            var url = '@Url.Action("GetDB", "Job")';
+            $.get(url, { storage: SelDestination },
+                function (data) {
+                    if (data.success) {
+                        //divDestinationTable.empty();
+                        if (data.val.length > 0) {
+                            SelDestinationDB = data.val[data.val.length - 1][0];   //Get the default destination database here
+
+                            for (var i = 0; i < data.val.length-1; i++) {
+                                if (data.val[i] == SelDestinationDB) {
+                                    divDestinationDB.append('<option value="' + data.val[i] + '" selected="selected">' + data.val[i] + '</option>');
+                                }
+                                else
+                                    divDestinationDB.append('<option value="' + data.val[i] + '">' + data.val[i] + '</option>');
+                            }
+                            divDestinationDB.css('visibility', 'visible');
+                        }
+
+                        $("#ddlDestinationDB").trigger("change");    //trigger a change to dropdownlist for source database and load its corresponding tables
+                    }
+                    else {
+                        // Error, execute js code here
+                        $("#lbDestinationTableError").html(data.val);
+                        $("#lbDestinationTableError").css('visibility', 'visible');
+                        divDestinationDB.css('visibility', 'hidden');
+                    }
+                });
+        });
+        $("#ddlDestination").trigger("change");
+
+
+        //get destination table
+        $("#ddlDestinationDB").bind("change", function () {
+
+            $("#lbDestinationTableError").css('visibility', 'hidden');
+            $("#lbDestinationTable").css('visibility', 'hidden');
+
+            var divDestinationTable = $("#lbDestinationTable");
+            var SelDestination = $("#ddlDestination").val();
+            var SelDestinationDB = $("#ddlDestinationDB").val();
+            if (SelDestinationDB == null) {
+                SelDestinationDB = '@ViewBag.DestinationDB';
+            }
+            var url = '@Url.Action("GetDBTable", "Job")';
+            $.get(url, { storage: SelDestination, database: SelDestinationDB },
+                function (data) {
+                    if (data.success) {
+                        divDestinationTable.empty();
+                        for (var i = 0; i < data.val.length; i++) {
+                            if (i == 0) {
+                                divDestinationTable.append('<option value="' + data.val[i] + '" selected="selected">' + data.val[i] + '</option>');
+                            }
+                            else
+                                divDestinationTable.append('<option value="' + data.val[i] + '">' + data.val[i] + '</option>');
+                        }
+                        divDestinationTable.css('visibility', 'visible');
+                    }
+                    else {
+                        // Error, execute js code here
+                        $("#lbDestinationTableError").html(data.val);
+                        $("#lbDestinationTableError").css('visibility', 'visible');
+                        divDestinationTable.css('visibility', 'hidden');
+                    }
+                });
+        });
+        $("#ddlDestinationDB").trigger("change");
+
+
+        $("#btTransfer").bind("click", function () {
+
+            $("#lbDestinationTableError").css('visibility', 'hidden');
+
+            var url = "@Url.Action("RunJob", "Job")";
+            $.post(url, {
+                Source: $("#ddlSource").val(), Destination: $("#ddlDestination").val(),
+                dbSourceDB: $("#ddlSourceDB").val(), dbDestinationDB: $("#ddlDestinationDB").val(),
+                dbSourceTable: $("#lbSourceTable").val(), dbDestinationTable: $("#lbDestinationTable").val()
+            },
+            function (data) {
+                //debugger;
+                if (data.success) {
+                    $("#lbSourceTableError").html(data.val);
+                    $("#lbSourceTableError").css('visibility', 'visible');
+                    $("#lbSourceTableError").css('color', 'blue');
+
+                    $("#ddlDestinationDB").trigger("change");   //Added by Anthony Lai on 2016-04-28: trigger a change to dropdownlist for destination database and load its corresponding tables
+                }
+                else
+                {
+                    $("#lbSourceTableError").html(data.val);
+                    $("#lbSourceTableError").css('visibility', 'visible');
+                    $("#lbSourceTableError").css('color', 'red');
+                }
+            });
+        });
+    });
+
+</script>
+
+
+
+<h2>
+    @ViewBag.Title.    
+</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            <h4>Select source and destination with its corresponding table(s) to perform data transfer.</h4>
+            <hr />                
+            <table align="center" class="taskList" bordercolor="#bbbbbb" style="width: 600px; border-collapse: collapse;" border="1" cellspacing="0" cellpadding="3">
+				<tbody>
+
+					<tr>
+						<td style="width: 20%; text-align: center;">
+                            <label>Source</label>
+                        </td>
+						<td style="width: 20%; text-align: center;">
+							<label>Action</label>
+						</td>						
+						<td style="width: 20%; text-align: center;">
+							<label>Destination</label>
+						</td>						
+					</tr>
+					<tr>
+						<td style="width: 20%; text-align: center;" valign="middle">
+                            @if (Model != null)
+                            {
+                                @Html.DropDownListFor(m => m.SourceId, Model.Storage, new { @class = "width305", @size = "1", @id = "ddlSource", @style = "width:auto" })
+                            }
+                        </td>
+                        <td style="width: 20%; text-align: center;">
+                            <input id="btTransfer" type="submit" value="Transfer >>" class="btn btn-default" />
+                        </td>
+                        <td style="width: 20%; text-align: center;" valign="middle">
+                            @if (Model != null)
+                            {
+                                @Html.DropDownListFor(m => m.DestinationId, Model.Storage, new { @class = "width305", @size = "1", @id = "ddlDestination", @style = "width:auto" })
+                            }
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 20%; text-align: center;">
+                            <label>Source Database</label>
+                        </td>
+                        <td style="width: 20%; text-align: center;">
+                            @*<label id="lbSourceTableError" style="visibility:hidden; color:red"></label>*@
+                        </td>
+                        <td style="width: 20%; text-align: center;">
+                            <label>Destination Database</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 20%; text-align: center;" valign="middle">
+                            @{var mItemsDB = new List<SelectListItem>
+                                {
+                                };
+                            }
+                            @Html.DropDownList("SourceDB", new SelectList(mItemsDB, "BooksDB"), new { @class = "width305", @id = "ddlSourceDB", size = 1, style = "width:auto" })
+                        </td>
+                        <td style="width: 20%; text-align: center;"></td>
+                        <td style="width: 20%; text-align: center;" valign="middle">
+                            @{var mItemsDB2 = new List<SelectListItem>
+                                {
+                                };
+                            }
+                            @Html.DropDownList("DestinationDB", new SelectList(mItemsDB2, "BooksDB"), new { @class = "width305", @id = "ddlDestinationDB", size = 1, style = "width:auto" })
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 20%; text-align: center;">
+                            <label>Source Table</label>
+                        </td>
+                        <td style="width: 20%; text-align: center;">
+                            <label></label>
+                        </td>
+                        <td style="width: 20%; text-align: center;">
+                            <label>Destination Table</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 20%; text-align: center;">
+                            <label id="lbSourceTableError" style="visibility:hidden; color:red"></label>
+                            @{var mItemsTB = new List<SelectListItem>
+                                {
+                                };
+                            }
+                            @Html.ListBox("SourceTable", new SelectList(mItemsTB, "Books"), new { @class = "width305", @id = "lbSourceTable", size = 5, style = "height: 150px; width:auto; visibility:hidden" })
+                        </td>
+                        <td style="width: 20%; text-align: center;"></td>
+                        <td style="width: 20%; text-align: center;">
+                            <label id="lbDestinationTableError" style="visibility:hidden; color:red"></label>
+                            @{var mItemsTB2 = new List<SelectListItem>
+                                {
+                                };
+                            }
+                            @Html.ListBox("DestinationTable", new SelectList(mItemsTB2, "Books"), new { @class = "width305", @id = "lbDestinationTable", size = 5, style = "height: 150px; width:auto; visibility:hidden" })
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

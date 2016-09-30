@@ -1,0 +1,85 @@
+﻿@using DynamicMVC1.Models
+@using System.Web.UI.WebControls; 
+@model IEnumerable<DynamicMVC1.Models.Storage>
+@{
+    ViewBag.Title = "SV4U Enterprise Data PipeLine";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Index", "Job", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+
+                <h4>Select a job to run.</h4>
+                <hr />                
+                <table align="center" class="taskList" bordercolor="#bbbbbb" style="width: 600px; border-collapse: collapse;" border="1" cellspacing="0" cellpadding="3">
+				<tbody>
+					<tr>
+						<td style="width: 20%; text-align: center;">
+							<label>Source</label>
+						</td>
+						<td style="width: 20%; text-align: center;">
+							<label>Action</label>
+						</td>						
+						<td style="width: 20%; text-align: center;">
+							<label>Destination</label>
+						</td>						
+					</tr>
+					<tr>
+						<td style="width: 20%; text-align: center;">
+							<div class="form-group">								
+                                    @{var source = new List<ListItem>
+									    {
+										      new ListItem { Text = "HDFS", Value="HDFS" },
+										      new ListItem { Text = "Hive", Value="Hive" },
+										      new ListItem { Text = "MySQL", Value="MySQL" },
+										      new ListItem { Text = "Oracle", Value="Oracle" },
+										      new ListItem { Text = "AWS", Value="AWS" },
+										      new ListItem { Text = "MogoDB", Value="MogoDB" }
+									    };
+                                    }
+                                @if(Model.Count<Storage>() != 0)
+                                {
+                                    @Html.DropDownList("Source", new SelectList(Model.Select(i => i.Name).Distinct().ToList(), "MySQL"));
+                                }
+                                else
+                                {
+                                    <script type="text/javascript">
+                                        alert("Model empty");
+                                    </script>
+                                }
+									
+							</div> 
+						</td>
+						<td style="width: 20%; text-align: center;">
+							<input type="submit" value="Transfer >>" class="btn btn-default" />
+						</td>					
+						<td style="width: 20%; text-align: center;">
+							<div class="form-group">								
+								@{var listItemsHDFS = new List<ListItem>
+									{
+										  new ListItem { Text = "HDFS", Value="HDFS" },
+										  new ListItem { Text = "Hive", Value="Hive" },
+										  new ListItem { Text = "MySQL", Value="MySQL" },
+										  new ListItem { Text = "Oracle", Value="Oracle" },
+										  new ListItem { Text = "AWS", Value="AWS" },
+										  new ListItem { Text = "MogoDB", Value="MogoDB" }
+									};
+								}
+                                @Html.DropDownList("Destination", new SelectList(Model.Select(i => i.Name).Distinct().ToList(), "HDFS"))
+							</div>	
+						</td>
+					</tr>
+				  </tbody>
+				</table>             
+            }
+
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

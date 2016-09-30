@@ -1,0 +1,74 @@
+﻿@model EnterpriseDataPipeline.Models.SV4URegisterViewModel
+@{
+    ViewBag.Title = "Interested to Learn More, Please Fill-in Your Personal Information";
+}
+
+<h2>@ViewBag.Title.</h2>
+<hr />
+@using (Html.BeginForm("SV4URegister", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @*<h4>Create a new account.</h4>
+    <hr />*@
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <hr />
+    <h4>Interests / Additional Information:</h4>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.LikeKidsYouthProgram)
+                @Html.LabelFor(m => m.LikeKidsYouthProgram)
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.LikeITtrainingPlacement)
+                @Html.LabelFor(m => m.LikeITtrainingPlacement)
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.LikeBigDataIotCloudMarketPlace)
+                @Html.LabelFor(m => m.LikeBigDataIotCloudMarketPlace)
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

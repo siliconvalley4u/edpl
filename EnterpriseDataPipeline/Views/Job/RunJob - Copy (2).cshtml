@@ -1,0 +1,26 @@
+﻿@using DynamicMVC1.Models
+
+@{
+    ViewBag.Title = "Run Job";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+
+@using (Html.BeginForm()) {
+    
+    <fieldset>
+        <legend>Storage</legend>
+		<div class="editor-label">
+            @Html.LabelFor(model => model.StorageId, "Artist")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("StorageId", String.Empty)
+            @Html.ValidationMessageFor(model => model.StorageId)
+        </div>
+		
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}

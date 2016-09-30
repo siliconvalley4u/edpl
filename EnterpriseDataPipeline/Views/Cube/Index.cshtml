@@ -1,0 +1,38 @@
+﻿@using System.Dynamic;
+@using EnterpriseDataPipeline.Models;
+@using System.Web.UI.WebControls;
+@{
+    ViewBag.Title = "SV4U Enterprise Data PipeLine";
+}
+
+<script type="text/javascript">
+
+    var chartsdata = null;
+
+    $(document).ready(function () {      
+
+        $("body").css("background-color", "#F3F3F3")
+    });
+
+</script>
+
+<h2>
+    @ViewBag.Title.
+</h2>
+
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-cube">OLAP Cube</a></li>
+    </ul>
+
+    <viewdata page="" />
+
+    <div id="tabs-cube" class="framed-application">
+        <iframe id="iframeCube" src="http://142.0.252.93:9090/mondrian/testpage.jsp?query=mondrian" style="width: 1024px; height:4768px; border: none;"></iframe>
+    </div>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

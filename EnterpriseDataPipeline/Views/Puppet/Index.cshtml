@@ -1,0 +1,527 @@
+﻿@using System.Dynamic;
+@using EnterpriseDataPipeline.Models;
+@using System.Web.UI.WebControls;
+@model IEnumerable<EnterpriseDataPipeline.Models.ModuleTB>
+@{
+    ViewBag.Title = "SV4U Enterprise Data PipeLine - Module Installation using Puppet";
+    ViewBag.SourceDB = "BooksDB";
+    ViewBag.DestinationDB = "BooksDB";
+    ViewBag.SourceTB = "Books";
+    ViewBag.DestinationTB = "Books";
+
+    //var grid = new WebGrid(ViewBag.Result);
+}
+
+
+
+<script>
+
+    $(document).ready(function () {
+        $("body").css("background-color", "#F3F3F3")
+
+        $("select").removeAttr("multiple");
+
+        //debugger;   //Added by Anthony Lai to debug javascript; must be removed after debug is done
+
+        //get source database
+        $("#ddlSource").bind("change", function () {
+            //debugger;
+            $("#lbSourceTableError").css('visibility', 'hidden');
+            $("#ddlSourceDB").css('visibility', 'hidden');
+            $("#ddlSourceTable").css('visibility', 'hidden');
+            $("#ddlSourceDB").empty();
+            $("#ddlSourceTable").empty();
+
+            //$("#taSourceQueryResult").empty();
+
+
+            var divSourceDB = $("#ddlSourceDB");
+            var SelSource = $("#ddlSource").val();
+            var SelSourceDB = '@ViewBag.SourceDB';
+            var url = '@Url.Action("GetDB", "Analysis")';
+            $.get(url, { storage: SelSource },
+                function (data) {
+                    //debugger;
+                    if (data.success) {
+                        // Success, execute js code here
+                        for (var i = 0; i < data.val.length; i++) {
+                            //if (i == 0)
+                            if (data.val[i] == SelSourceDB) {
+                                divSourceDB.append('<option value="' + data.val[i] + '" selected="selected">' + data.val[i] + '</option>');
+                            }
+                            else
+                                divSourceDB.append('<option value="' + data.val[i] + '">' + data.val[i] + '</option>');
+                        }
+                        divSourceDB.css('visibility', 'visible');
+                    }
+                    else {
+                        // Error, execute js code here
+                        $("#lbSourceTableError").html(data.val);
+                        $("#lbSourceTableError").css('visibility', 'visible');
+                        divSourceDB.css('visibility', 'hidden');
+                    }
+                });
+
+            $("#ddlSourceDB").trigger("change");    //trigger a change to dropdownlist for source database and load its corresponding tables
+
+        });
+        $("#ddlSource").trigger("change");
+
+
+        //get source table
+        $("#ddlSourceDB").bind("change", function () {
+            //debugger;
+            $("#lbSourceTableError").css('visibility', 'hidden');
+            $("#ddlSourceTable").css('visibility', 'hidden');
+
+            var divSourceTable = $("#ddlSourceTable");
+            var SelSource = $("#ddlSource").val();
+            var SelSourceDB = $("#ddlSourceDB").val();
+            if (SelSourceDB == null) {
+                SelSourceDB = '@ViewBag.SourceDB';
+            }
+            var url = '@Url.Action("GetDBTable", "Analysis")';
+            $.get(url, { storage: SelSource, database: SelSourceDB },
+                function (data) {
+                    //debugger;
+                    if (data.success) {
+                        // Success, execute js code here
+                        divSourceTable.empty();
+                        for (var i = 0; i < data.val.length; i++) {
+                            if (i == 0) {
+                                divSourceTable.append('<option value="' + data.val[i] + '" selected="selected">' + data.val[i] + '</option>');
+                            }
+                            else
+                                divSourceTable.append('<option value="' + data.val[i] + '">' + data.val[i] + '</option>');
+                        }
+                        divSourceTable.css('visibility', 'visible');
+                    }
+                    else {
+                        // Error, execute js code here
+                        $("#lbSourceTableError").html(data.val);
+                        $("#lbSourceTableError").css('visibility', 'visible');
+                        divSourceTable.css('visibility', 'hidden');
+                    }
+                });
+        });
+        $("#ddlSourceDB").trigger("change");
+
+
+        //update source query when ddlSourceTable change
+        $("#ddlSourceTable").bind("change", function () {
+            //debugger;
+            var myVal = $("#ddlSourceTable").val();
+            if (myVal == null) {
+                myVal = '@ViewBag.SourceTB';
+            }
+            $("#taSourceQuery").val("select * from " + myVal);
+        });
+        $("#ddlSourceTable").trigger("change");
+
+
+        //update destination query when ddlDestinationTable change
+        $("#ddlDestinationTable").bind("change", function () {
+            //debugger;
+            var myVal = $("#ddlDestinationTable").val();
+            if (myVal == null) {
+                myVal = '@ViewBag.SourceTB';
+            }
+            $("#taDestinationQuery").val("select * from " + myVal);
+        });
+        $("#ddlDestinationTable").trigger("change");
+
+
+        //get destination database
+        $("#ddlDestination").bind("change", function () {
+
+            $("#lbDestinationTableError").css('visibility', 'hidden');
+            $("#ddlDestinationDB").css('visibility', 'hidden');
+            $("#ddlDestinationTable").css('visibility', 'hidden');
+            $("#ddlDestinationDB").empty();
+            $("#ddlDestinationTable").empty();
+
+            var divDestinationDB = $("#ddlDestinationDB");
+            var SelDestination = $("#ddlDestination").val();
+            var SelDestinationDB = '@ViewBag.DestinationDB';
+            var url = '@Url.Action("GetDB", "Analysis")';
+            $.get(url, { storage: SelDestination },
+                function (data) {
+                    if (data.success) {
+                        //divDestinationTable.empty();
+                        for (var i = 0; i < data.val.length; i++) {
+                            if (data.val[i] == SelDestinationDB) {
+                                divDestinationDB.append('<option value="' + data.val[i] + '" selected="selected">' + data.val[i] + '</option>');
+                            }
+                            else
+                                divDestinationDB.append('<option value="' + data.val[i] + '">' + data.val[i] + '</option>');
+                        }
+                        //divDestinationDB.css('visibility', 'visible');
+                    }
+                    else {
+                        // Error, execute js code here
+                        $("#lbDestinationTableError").html(data.val);
+                        $("#lbDestinationTableError").css('visibility', 'visible');
+                        divDestinationDB.css('visibility', 'hidden');
+                    }
+                });
+
+            $("#ddlDestinationDB").trigger("change");
+        });
+        $("#ddlDestination").trigger("change");
+
+
+        //get destination table
+        $("#ddlDestinationDB").bind("change", function () {
+
+            $("#lbDestinationTableError").css('visibility', 'hidden');
+            $("#ddlDestinationTable").css('visibility', 'hidden');
+
+            var divDestinationTable = $("#ddlDestinationTable");
+            var SelDestination = $("#ddlDestination").val();
+            var SelDestinationDB = $("#ddlDestinationDB").val();
+            if (SelDestinationDB == null) {
+                SelDestinationDB = '@ViewBag.DestinationDB';
+            }
+            var url = '@Url.Action("GetDBTable", "Analysis")';
+            $.get(url, { storage: SelDestination, database: SelDestinationDB },
+                function (data) {
+                    if (data.success) {
+                        divDestinationTable.empty();
+                        for (var i = 0; i < data.val.length; i++) {
+                            if (i == 0) {
+                                divDestinationTable.append('<option value="' + data.val[i] + '" selected="selected">' + data.val[i] + '</option>');
+                            }
+                            else
+                                divDestinationTable.append('<option value="' + data.val[i] + '">' + data.val[i] + '</option>');
+                        }
+                        divDestinationTable.css('visibility', 'visible');
+                    }
+                    else {
+                        // Error, execute js code here
+                        $("#lbDestinationTableError").html(data.val);
+                        $("#lbDestinationTableError").css('visibility', 'visible');
+                        divDestinationTable.css('visibility', 'hidden');
+                    }
+                });
+        });
+        $("#ddlDestinationDB").trigger("change");
+
+
+        $("#btRunQuery").bind("click", function () {
+
+            //debugger;
+
+            $("#lbDestinationTableError").css('visibility', 'hidden');
+
+            var url = "@Url.Action("RunSourceQuery", "Analysis")";
+            //$.post(url, {
+            //    Source: $("#ddlSource").val(), Destination: $("#ddlDestination").val(),
+            //    dbSourceDB: $("#lbSourceDB").val(), dbDestinationDB: $("#lbDestinationDB").val(),
+            //    dbSourceTable: $("#lbSourceTable").val(), dbDestinationTable: $("#lbDestinationTable").val()
+            //},
+            $.get(url, {
+                source: $("#ddlSource").val(),
+                database: $("#ddlSourceDB").val(),
+                query: $("#taSourceQuery").val()
+            },
+                function (data) {
+                    //debugger;
+
+                    if (data.success) {
+                        $("#SourceDetailTable").empty();
+                        //$("#SourceDetailTable").append("<table id='tblSourceQueryResult' class='tableStyle'><tr><th class='tableHeader' style='width:60px;'>ID</th><th class='tableHeader'>Name</th></tr></table>");
+                        $("#SourceDetailTable").append("<table id='tblSourceQueryResult' class='table table-striped table-bordered table-condensed'></table>");
+
+                        var textCol = "<tr>";
+                        var colName = data.val[data.val.length - 1];
+                        for (var k = 0; k < colName.length; k++) {
+                            textCol = textCol + "<th class='tableHeader' style='width:auto;'>" + colName[k] + "</th>";
+                        }
+                        textCol = textCol + "</tr>";
+                        $("#tblSourceQueryResult").append(textCol);
+
+                        var text = "";
+                        for (var i = 0; i < data.val.length-1; i++) {
+                            //debugger;
+                            text = text + "<tr>";
+                            var myData = data.val[i];
+                            //$("#tblSource tr:last").append("<tr>");
+                            for (var j = 0; j < myData.length; j++) {
+                                text = text + "<td class='tableCell' style='width:auto; white-space:nowrap; text-overflow: ellipsis; overflow: hidden;'>" + myData[j] + "</td>";
+                                //$("#tblSource tr:last").append("<td class='tableCell'>" + myData[j] + "</td>");
+                            }
+                            text = text + "</tr>"
+                            //$("#tblSource td:last").append("</tr>");
+                        }
+
+                        $("#tblSourceQueryResult").append(text);
+
+                        //$("#taSourceQueryResult").empty();
+
+                        //$("#lbSourceTableError").html(data.val);
+                        //$("#lbSourceTableError").css('visibility', 'visible');
+                        //$("#lbSourceTableError").css('color', 'blue');
+
+                        //$("#taSourceQueryResult").html(data.val);
+                    }
+                    else {
+                        $("#lbSourceTableError").html(data.val);
+                        $("#lbSourceTableError").css('visibility', 'visible');
+                        $("#lbSourceTableError").css('color', 'red');
+                    }
+                });
+        });
+
+        $("#btRunDestinationQuery").bind("click", function () {
+
+            $("#lbDestinationTableError").css('visibility', 'hidden');
+
+            var url = "@Url.Action("RunSourceQuery", "Analysis")";
+            $.get(url, {
+                source: $("#ddlDestination").val(),
+                database: $("#ddlDestinationDB").val(),
+                query: $("#taDestinationQuery").val()
+            },
+                function (data) {
+                    //debugger;
+
+                    if (data.success) {
+                        $("#DestinationDetailTable").empty();
+                        //$("#DestinationDetailTable").append("<table id='tblDestinationQueryResult' class='tableStyle'><tr><th class='tableHeader' style='width:60px;'>ID</th><th class='tableHeader'>Name</th></tr></table>");
+                        $("#DestinationDetailTable").append("<table id='tblDestinationQueryResult' class='table table-striped table-bordered table-condensed'></table>");
+
+                        //debugger;
+
+                        var textCol = "<tr>";                  
+                        var colName = data.val[data.val.length - 1];
+                        for (var k = 0; k < colName.length; k++) {
+                            textCol = textCol + "<th class='tableHeader' style='width:auto;'>" + colName[k] + "</th>";
+                        }
+                        textCol = textCol + "</tr>";
+                        $("#tblDestinationQueryResult").append(textCol);
+
+                        var text = "";
+                        for (var i = 0; i < data.val.length-1; i++) {
+                            //debugger;
+                            text = text + "<tr>";
+                            var myData = data.val[i];
+                            //$("#tblSource tr:last").append("<tr>");
+                            for (var j = 0; j < myData.length; j++) {
+                                text = text + "<td class='tableCell style='width:auto; white-space:nowrap; text-overflow: ellipsis; overflow: hidden;'>" + myData[j] + "</td>";
+                                //$("#tblSource tr:last").append("<td class='tableCell'>" + myData[j] + "</td>");
+                            }
+                            text = text + "</tr>"
+                            //$("#tblSource td:last").append("</tr>");
+                        }
+
+                        $("#tblDestinationQueryResult").append(text);
+
+                        //$("#taDestinationQueryResult").empty();
+
+                        //$("#lbSourceTableError").html(data.val);
+                        //$("#lbSourceTableError").css('visibility', 'visible');
+                        //$("#lbSourceTableError").css('color', 'blue');
+
+                        //$("#taDestinationQueryResult").html(data.val);
+                    }
+                    else {
+                        $("#lbSourceTableError").html(data.val);
+                        $("#lbSourceTableError").css('visibility', 'visible');
+                        $("#lbSourceTableError").css('color', 'red');
+                    }
+                });
+        });
+
+    });
+
+</script>
+
+
+
+<h2>
+    @ViewBag.Title.
+</h2>
+<div class="row">
+    <div class="col-md-8">
+        @*<section id="loginForm">*@
+            @*@using (Html.BeginForm("Index", "Job", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {*@
+
+            <h4>Select module to perform installation.</h4>
+            <br />
+            @*Source Query*@
+            <table align="left" class="taskList" bordercolor="#bbbbbb" style="width: 600px; border-collapse: collapse;" border="1" cellspacing="0" cellpadding="3">
+                <tbody>
+                    <tr>
+                        <td style="width: 20%; text-align: center;">
+                            @*<td style="width:auto; text-align: center;">*@
+                            <label>Module:</label>
+                        </td>
+                        <td style="width: 20%; text-align: center; visibility:hidden;">
+                            <label>Source Database</label>
+                        </td>
+                        <td style="width: 20%; text-align: center; visibility:hidden;">
+                            <label>Source Table</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        @*<td style="width: 20%; text-align: center;" valign="middle">*@
+                        <td style="width: 20%; text-align: center;" valign="top">
+                            @if (Model != null)
+                            {
+                                @Html.DropDownList("Source", new SelectList(Model.Select(i => i.Name).Distinct().ToList(), "MySQL"), new { @class = "width305", @size = "1", @id = "ddlSource", @style = "width:auto" })
+                            }
+                        </td>
+                        @*<td style="width: 20%; text-align: center;">*@
+                        <td style="width: 20%; text-align: center;" valign="top">
+                            @{var mItemsDB = new List<SelectListItem> { };}
+                            @Html.DropDownList("SourceDB", new SelectList(mItemsDB, "BooksDB"), new { @class = "width305", @id = "ddlSourceDB", size = 1, style = "width:auto" })
+                        </td>
+                        <td style="width: 20%; text-align: center;" valign="middle">
+                            @{var mItemsTB = new List<SelectListItem> { };}
+                            @*@Html.DropDownList("SourceTable", new SelectList(mItemsTB, "Books"), new { @class = "width305", @id = "lbSourceTable", size = 5, style = "height: 150px; width:auto; visibility:hidden" })*@
+                            @Html.DropDownList("SourceTable", new SelectList(mItemsTB, "Books"), new { @class = "width305", @id = "ddlSourceTable", size = 1, style = "width:auto" })
+                        </td>
+                    </tr>
+                </tbody>
+            </table>  
+            <br />
+            <br />          
+            <table align="left" class="taskList" bordercolor="#bbbbbb" style="width: 600px; border-collapse: collapse;" border="1" cellspacing="0" cellpadding="3">
+                <tbody>
+                    <tr>
+                        <td style="width: 20%; text-align: left;">
+                            <label>Query:</label>
+                        </td>
+                        <td style="width: 20%; text-align: left;">
+                            <label></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        @*<td style="width: 100%; text-align: left;">*@
+                        <td style="width: 40%; text-align: left;">
+                            @Html.TextArea("SourceQuery", "Select * from Books", new { @class = "form-control", @id = "taSourceQuery", @cols = 50, style = "height: 100px; width: 800px;" })
+                        </td>
+                        <td style="width: 20%; text-align: center;">
+                            <label id="lbSourceTableError" style="visibility:hidden; color:red"></label>
+                            <input id="btRunQuery" type="submit" value="Run Installation" class="btn btn-default" />
+                        </td>
+                    </tr>                    
+                </tbody>
+            </table>
+            <br />
+            <br />
+            <table align="left" class="taskList" bordercolor="#bbbbbb" style="width: 600px; border-collapse: collapse; visibility:hidden;" border="1" cellspacing="0" cellpadding="3">
+                <tbody>
+                    <tr>
+                        <td style="width: 20%; text-align: left;">
+                            <label>Query Result:</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 100%; text-align: left;">
+                            <div id="SourceDetailTable"></div>
+                            @*@Html.TextArea("SourceQueryResult", null, new { @class = "form-control", @id = "taSourceQueryResult", @cols = 50, style = "height: 100px; width: 800px; visibility:hidden" })*@
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br />
+            <br />
+            <table align="left" class="taskList" bordercolor="#bbbbbb" style="width: 600px; border-collapse: collapse; visibility:hidden;" border="1" cellspacing="0" cellpadding="3">
+            <tbody>
+                <tr>
+                    <td style="width: 40%; height: 75px; text-align: left; background-color: cyan">
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+            <br />
+            <br />
+
+            @*Destination Query*@
+            <table align="left" class="taskList" bordercolor="#bbbbbb" style="width: 600px; border-collapse: collapse; visibility:hidden;" border="1" cellspacing="0" cellpadding="3">
+                <tbody>                   
+                    <tr>
+                        <td style="width: 20%; text-align: center;">
+                            <label>Destination</label>
+                        </td>
+                        <td style="width: 20%; text-align: center;">
+                            <label>Destination Database</label>
+                        </td>
+                        <td style="width: 20%; text-align: center;">
+                            <label>Destination Table</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 20%; text-align: center;" valign="top">
+                            @*<label id="lbSourceTableError" style="visibility:hidden; color:red"></label>*@
+                            @*<select class="width305" id="lbSourceTable" size="5" style="height: 150px; width:auto; visibility:hidden"></select>*@
+                            @if (Model != null)
+                            {
+                                @Html.DropDownList("Destination", new SelectList(Model.Select(i => i.Name).Distinct().ToList(), "HDFS"), new { @class = "width305", @size = "1", @id = "ddlDestination", @style = "width:auto; visibility:hidden;" })
+                            }
+                        </td>
+                        <td style="width: 20%; text-align: center;" valign="top">
+                            @{var mItemsDB2 = new List<SelectListItem> { };}
+                            @Html.DropDownList("DestinationDB", new SelectList(mItemsDB2, "BooksDB"), new { @class = "width305", @id = "ddlDestinationDB", size = 1, style = "width:auto; visibility:hidden;" })
+                        </td>
+                        <td style="width: 20%; text-align: center;">
+                            <label id="lbDestinationTableError" style="visibility:hidden; color:red"></label>
+                            @*<select class="width305" id="lbDestinationTable" size="5" style="height: 150px; width:auto; visibility:hidden"></select>*@
+                            @{var mItemsTB2 = new List<SelectListItem> { };}
+                            @Html.DropDownList("DestinationTable", new SelectList(mItemsTB2, "Books"), new { @class = "width305", @id = "ddlDestinationTable", size = 1, style = "width:auto; visibility:hidden;" })
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <br />           
+            <table align="left" class="taskList" bordercolor="#bbbbbb" style="width: 600px; border-collapse: collapse; visibility:hidden;" border="1" cellspacing="0" cellpadding="3">
+                <tbody>
+                    <tr>
+                        <td style="width: 40%; text-align: left;">
+                            <label>Query:</label>
+                        </td>
+                        <td style="width: 20%; text-align: left;">
+                            <label></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        @*<td style="width: 100%; text-align: left;">*@
+                        <td style="width: 40%; text-align: left;">
+                            @Html.TextArea("DestinationQuery", "Select * from Books", new { @class = "form-control", @id = "taDestinationQuery", @cols = 50, style = "height: 100px; width: 800px;" })
+                        </td>
+                        <td style="width: 20%; text-align: center;">
+                            <label id="lbSourceTableError" style="visibility:hidden; color:red"></label>
+                            <input id="btRunDestinationQuery" type="submit" value="Run Query >>" class="btn btn-default" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <br />
+            <table align="left" class="taskList" bordercolor="#bbbbbb" style="width: 600px; border-collapse: collapse; visibility:hidden;" border="1" cellspacing="0" cellpadding="3">
+                <tbody>
+                    <tr>
+                        <td style="width: 20%; text-align: left;">
+                            <label>Query Result:</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 100%; text-align: left;">
+                            <div id="DestinationDetailTable"></div>
+                            @*@Html.TextArea("DestinationQueryResult", null, new { @class = "form-control", @id = "taDestinationQueryResult", @cols = 50, style = "height: 100px; width: 800px; visibility:hidden" })*@
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        @*</section>*@
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

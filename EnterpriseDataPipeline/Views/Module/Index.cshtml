@@ -1,0 +1,156 @@
+﻿@using System.Dynamic;
+@using EnterpriseDataPipeline.Models;
+@using System.Web.UI.WebControls;
+@*@model IEnumerable<EnterpriseDataPipeline.Models.ModuleTB>*@
+
+@model EnterpriseDataPipeline.ViewModel.ViewModelModuleVM
+
+@{
+    ViewBag.Title = "SV4U Enterprise Data PipeLine - Module Installation";
+}
+
+
+<script>
+
+    $(document).ready(function () {
+        $("body").css("background-color", "#F3F3F3")
+
+        //$("select").removeAttr("multiple");
+
+        //debugger;   //Added by Anthony Lai to debug javascript; must be removed after debug is done
+
+        $("#btRunInstallation").bind("click", function () {
+
+            //debugger;
+
+            //$("#lbDestinationTableError").css('visibility', 'hidden');
+            $("#taInstallationResult").empty();
+            var moduleSel = $("#lbModule").val();
+            var strModuleSel = "";
+            if (moduleSel != null)
+            {
+                //var str = moduleSel.split(',');
+                for (var i = 0; i < moduleSel.length; i++)
+                {
+                    strModuleSel += moduleSel[i] + ",";
+                }
+            }
+
+            var url = "@Url.Action("RunInstallation", "Module")";
+            $.get(url, {
+                    module: strModuleSel,
+                    destinationServerIP: $("#ddlDestinationServerIP").val()
+                },
+                function (data) {
+
+                    //debugger;
+
+                    if (data.success)
+                    {
+                        $("#taInstallationResult").append(data.val);
+
+                        //var textCol = "<tr>";
+                        //var colName = data.val[data.val.length - 1];
+                        //for (var k = 0; k < colName.length; k++) {
+                        //    textCol = textCol + "<th class='tableHeader' style='width:auto;'>" + colName[k] + "</th>";
+                        //}
+                        //textCol = textCol + "</tr>";
+                        //$("#tblSourceQueryResult").append(textCol);
+
+                        //var text = "";
+                        //for (var i = 0; i < data.val.length-1; i++) {
+                        //    //debugger;
+                        //    text = text + "<tr>";
+                        //    var myData = data.val[i];
+                        //    for (var j = 0; j < myData.length; j++) {
+                        //        text = text + "<td class='tableCell' style='width:auto; white-space:nowrap; text-overflow: ellipsis; overflow: hidden;'>" + myData[j] + "</td>";
+                        //    }
+                        //    text = text + "</tr>"
+                        //}
+
+                        //$("#tblSourceQueryResult").append(text);
+                    }
+                    else
+                    {
+                        //$("#lbSourceTableError").html(data.val);
+                        //$("#lbSourceTableError").css('visibility', 'visible');
+                        //$("#lbSourceTableError").css('color', 'red');
+                    }
+                });
+        });
+
+    });
+
+</script>
+
+
+<h2>
+    @ViewBag.Title.
+</h2>
+
+<div class="row">
+    <div class="col-md-8">   
+            <h4>Select module to perform installation.</h4>
+            <br />
+            @*Source Query*@
+            <table align="left" class="taskList" bordercolor="#bbbbbb" style="width: 600px; border-collapse: collapse;" border="1" cellspacing="0" cellpadding="3">
+                <tbody>
+                    <tr>
+                        <td style="width: 20%; text-align: center;">
+                            <label>Module:</label>
+                        </td>
+                        <td style="width: 20%; text-align: center;">
+                            <label>Destination Server IP</label>
+                        </td>
+                        <td style="width: 20%; text-align: center;">
+                            <label>Action</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 20%; text-align: center;" valign="middle">
+                            @if (Model != null)
+                            {
+                                @Html.ListBox("Module", new SelectList(Model.allModuleTB.Select(i => i.Name).Distinct().ToList(), "Mysql"), new { @class = "width305", @id = "lbModule", size = 5, style = "height: 180px; width:auto;" })
+                            }
+                        </td>
+                        <td style="width: 20%; text-align: center;" valign="middle">
+                            @*@{var mItemsTB = new List<SelectListItem> {
+                                    new SelectListItem { Text = "198.89.115.49", Value = "198.89.115.49"},
+                                    new SelectListItem { Text = "198.89.115.123", Value = "198.89.115.123"} };}
+                            @Html.DropDownList("DestinationServerIP", new SelectList(mItemsTB, "Value", "Text", mItemsTB.ToString()), new { @class = "width305", @id = "ddlDestinationServerIP", size = 1, style = "width:auto" })*@
+                            @if (Model != null)
+                            {
+                                @Html.DropDownList("DestinationServerIP", new SelectList(Model.allModuleServer.Select(i => i.IPAddress).Distinct().ToList(), "198.89.115.123"), new { @class = "width305", @id = "ddlDestinationServerIP", size = 1, style = "width:auto" })
+                            }
+                        </td>
+                        <td style="width: 20%; text-align: center;" valign="middle">
+                            <input id="btRunInstallation" type="submit" value="Run Installation" class="btn btn-default" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>  
+            <br />
+            <br />      
+        </div>
+</div>
+
+<div>
+    <table align="left" class="taskList" bordercolor="#bbbbbb" style="width: 600px; border-collapse: collapse;" border="1" cellspacing="0" cellpadding="3">
+        <tbody>
+            <tr>
+                <td>
+                    <label>Installation Result:</label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.TextArea("InstallationResult", null, new { @class = "form-control-SV4U-TextArea", @id = "taInstallationResult", @cols = "250", @style = "height: 200px; width: 600px;" })
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

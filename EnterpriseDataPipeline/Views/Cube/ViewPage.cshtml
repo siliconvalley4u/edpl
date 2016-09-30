@@ -1,0 +1,54 @@
+﻿@using System.Dynamic;
+@using EnterpriseDataPipeline.Models;
+@using System.Web.UI.WebControls;
+@model IEnumerable<EnterpriseDataPipeline.Models.Storage>
+@{
+    ViewBag.Title = "SV4U Enterprise Data PipeLine";
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        $("#tabs").tabs();
+    });
+
+    var chartsdata = null;
+
+    $(document).ready(function () {      
+
+        $("body").css("background-color", "#F3F3F3")
+    });
+
+</script>
+
+
+
+
+<h2>
+    @ViewBag.Title.
+</h2>
+
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-cube">OLAP Cube</a></li>
+    </ul>
+
+    @*<div id="tabs-cube" class="framed-application">
+        <iframe id="iframeCube" src="http://142.0.252.93:9090/mondrian" frameborder="0" width="1000" height="400"></iframe>
+    </div>*@
+
+    <viewdata page="" />
+
+    <div id="tabs-cube" class="framed-application">
+        @*<iframe id="iframeCube" src="http://142.0.252.93:9090/mondrian/testpage.jsp?query=mondrian" frameborder="0" width="1000" height="600" scrolling="auto"></iframe>*@
+        @*<iframe id="iframeCube" src="http://142.0.252.93:9090/mondrian/testpage.jsp" style="width: 1024px; height:768px; border: none;"></iframe>*@
+        @*<iframe id="iframeCube" src="http://142.0.252.93/sv4udatapipeline/DashBoard" style="width: 1024px; height:768px; border: none;"></iframe>*@
+        <iframe id="iframeCube" src="http://localhost:9090/mondrian/testpage.jsp?query=mondrian" style="width: 1024px; height:768px; border: none;"></iframe>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

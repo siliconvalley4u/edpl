@@ -1,0 +1,61 @@
+﻿@using DynamicMVC1.Models
+@using System.Web.UI.WebControls; 
+@model DynamicMVC.UI.ViewModels.DynamicDetailsViewModel
+@{
+    ViewBag.Title = "SV4U Enterprise Data PipeLine";
+}
+
+<h2>@ViewBag.Title.</h2>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("RunJob", "Job", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+
+                <h4>Select a job to run.</h4>
+                <hr />                
+                                 
+				<div class="form-group">
+					<label class="col-lg-2 control-label" for="hobies">Source:</label>
+					@{var listItems = new List<ListItem>
+						{
+							  new ListItem { Text = "MySQL", Value="MySQL" },
+							  new ListItem { Text = "Oracle", Value="Oracle" },
+							  new ListItem { Text = "AWS", Value="AWS" },
+							  new ListItem { Text = "HDFS", Value="HDFS" },
+							  new ListItem { Text = "Hive", Value="Hive" },
+							  new ListItem { Text = "MogoDB", Value="MogoDB" }
+						};
+					}
+					@Html.DropDownList("MySQL",new SelectList(listItems,"Value","Text"))
+				</div>  
+				
+				<div class="form-group">
+					<label class="col-lg-2 control-label" for="hobies">Destination:</label>
+					@{var listItemsHDFS = new List<ListItem>
+						{
+							  new ListItem { Text = "HDFS", Value="HDFS" },
+							  new ListItem { Text = "Hive", Value="Hive" },
+							  new ListItem { Text = "MySQL", Value="MySQL" },
+							  new ListItem { Text = "Oracle", Value="Oracle" },
+							  new ListItem { Text = "AWS", Value="AWS" },
+							  new ListItem { Text = "MogoDB", Value="MogoDB" }
+						};
+					}
+					@Html.DropDownList("HDFS",new SelectList(listItemsHDFS,"Value","Text"))
+				</div>	
+				
+				<div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Transfer >>" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
