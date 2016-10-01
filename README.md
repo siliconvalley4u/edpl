@@ -21,11 +21,11 @@ It also comes with:
 
 
 ## Enterprise Data Pipeline Setup
-Documentation for Enterprise Data Pipeline Setup can be found [here]()
+Documentation for Enterprise Data Pipeline Setup can be found [here](){:target="_blank"}
 
 
 ## Enterprise Data Pipeline Online Demo 
-Enterprise Data Pipeline Online Demo can be found [here](http://142.0.252.93/sv4udatapipeline)
+Enterprise Data Pipeline Online Demo can be found [here](http://142.0.252.93/sv4udatapipeline){:target="_blank"}
 
 
 # License
