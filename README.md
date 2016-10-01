@@ -1,7 +1,7 @@
 # Enterprise Data Pipeline
-- Enterprise Data Pipeline is Big Data Application to move data from source to destination. 
-- Source and destination can be Databases or HDFS Clusters.
-- Data Analytic
+- Enterprise Data Pipeline is Big Data Application to move data from source to destination. Source and destination can be Databases or HDFS Clusters.
+- Easy Data Analysis using SQL on Hive, HBase, Spark
+- Easy Building Dashboard and Charts with D3.js on Hive, HBase, Spark
 
 
 #Current Available Tasks for Moving Data:
