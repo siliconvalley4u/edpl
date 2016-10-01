@@ -2,7 +2,7 @@
 Enterprise Data Pipeline is Big Data Application to move data from source to destination. Source and destination can be Databases or HDFS Clusters.
 
 #Current available tasks for moving data:
-- MySQL/PostgresSQL => HDFS/Hive/HBase/Spark
+- ```MySQL/PostgresSQL => HDFS/Hive/HBase/Spark```
 
 ## Prerequisite:
 - Visual Studio Community 2015
