@@ -44,11 +44,9 @@
                     <li>@Html.ActionLink("Analysis", "Index", "Analysis")</li>
                     <li>@Html.ActionLink("DashBoard", "Index", "DashBoard")</li>
                     <li>@Html.ActionLink("Cube", "Index", "Cube")</li>
-                    @*<li>@Html.ActionLink("Cube", "ViewPage", "Cube")</li>*@
                     <li>@Html.ActionLink("Installer", "Index", "Module")</li>
                     <li>@Html.ActionLink("Kafka", "Index", "Kafka")</li>
-                    <li>@Html.ActionLink("Customer", "SV4URegister", "Account")</li>
-                    @*<li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
 
                 @if (Request.IsAuthenticated && User.IsInRole("Admin")) 

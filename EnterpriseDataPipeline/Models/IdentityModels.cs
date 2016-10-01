@@ -57,11 +57,6 @@ namespace EnterpriseDataPipeline.Models
         public DbSet<KafkaTopics> KafkaTopics { get; set; }
 
 
-        //Added by Anthony Lai on 2016-09-07
-        //For dataset to store potential customer
-        public DbSet<PotentialCustomer> PotentialCustomer { get; set; }
-
-
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

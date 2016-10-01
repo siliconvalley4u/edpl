@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using System.Collections.Generic;
 using DynamicMVC.Business.Attributes;
 
 namespace EnterpriseDataPipeline.Models

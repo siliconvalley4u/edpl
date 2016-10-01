@@ -224,62 +224,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508310051445_MySQL.cs" />
-    <Compile Include="Migrations\201508310051445_MySQL.Designer.cs">
-      <DependentUpon>201508310051445_MySQL.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201509092315420_ModuleInstallation.cs" />
-    <Compile Include="Migrations\201509092315420_ModuleInstallation.Designer.cs">
-      <DependentUpon>201509092315420_ModuleInstallation.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201510100632138_ModuleServerWithPrivateIP.cs" />
-    <Compile Include="Migrations\201510100632138_ModuleServerWithPrivateIP.Designer.cs">
-      <DependentUpon>201510100632138_ModuleServerWithPrivateIP.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201601292352214_Add_PEM_To_Module.cs" />
-    <Compile Include="Migrations\201601292352214_Add_PEM_To_Module.Designer.cs">
-      <DependentUpon>201601292352214_Add_PEM_To_Module.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201601292358148_Add_PEM_To_PuppetServer.cs" />
-    <Compile Include="Migrations\201601292358148_Add_PEM_To_PuppetServer.Designer.cs">
-      <DependentUpon>201601292358148_Add_PEM_To_PuppetServer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201601300234276_Add_JobDir_To_PuppetServer.cs" />
-    <Compile Include="Migrations\201601300234276_Add_JobDir_To_PuppetServer.Designer.cs">
-      <DependentUpon>201601300234276_Add_JobDir_To_PuppetServer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201601300237452_Add_JobLocation_To_PuppetServer.cs" />
-    <Compile Include="Migrations\201601300237452_Add_JobLocation_To_PuppetServer.Designer.cs">
-      <DependentUpon>201601300237452_Add_JobLocation_To_PuppetServer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602132238285_Add_KafkaServer.cs" />
-    <Compile Include="Migrations\201602132238285_Add_KafkaServer.Designer.cs">
-      <DependentUpon>201602132238285_Add_KafkaServer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602192353055_Add_KafkaTopcis.cs" />
-    <Compile Include="Migrations\201602192353055_Add_KafkaTopcis.Designer.cs">
-      <DependentUpon>201602192353055_Add_KafkaTopcis.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602271141196_Update_Storage.cs" />
-    <Compile Include="Migrations\201602271141196_Update_Storage.Designer.cs">
-      <DependentUpon>201602271141196_Update_Storage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201604250301539_Update_Storage1.cs" />
-    <Compile Include="Migrations\201604250301539_Update_Storage1.Designer.cs">
-      <DependentUpon>201604250301539_Update_Storage1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609080723132_Add_PotentialCustomer.cs" />
-    <Compile Include="Migrations\201609080723132_Add_PotentialCustomer.Designer.cs">
-      <DependentUpon>201609080723132_Add_PotentialCustomer.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201609080803134_Update_PotentialCustomer.cs" />
-    <Compile Include="Migrations\201609080803134_Update_PotentialCustomer.Designer.cs">
-      <DependentUpon>201609080803134_Update_PotentialCustomer.cs</DependentUpon>
+    <Compile Include="Migrations\201610010430120_InitialCreate.cs" />
+    <Compile Include="Migrations\201610010430120_InitialCreate.Designer.cs">
+      <DependentUpon>201610010430120_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\KafkaTopics.cs" />
     <Compile Include="Models\KafkaServer.cs" />
-    <Compile Include="Models\PotentialCustomer.cs" />
     <Compile Include="ViewModel\StorageViewModel.cs" />
     <Compile Include="ViewModel\ViewModelModuleVM.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -489,7 +440,6 @@
     <Content Include="Views\Cube\Index_bak.cshtml" />
     <Content Include="Views\Cube\RunJob.cshtml" />
     <Content Include="Views\Cube\ViewPage.cshtml" />
-    <Content Include="Views\DashBoard\Index - Copy.cshtml" />
     <Content Include="Views\Cube\Index.cshtml" />
     <Content Include="SSHKey\sv4u.ppk">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -521,7 +471,6 @@
     <Content Include="Views\Shared\DynamicDetails.cshtml" />
     <Content Include="Views\Shared\DynamicDelete.cshtml" />
     <Content Include="Views\Shared\DynamicCreate.cshtml" />
-    <Content Include="Views\DashBoard\Index - Copy %282%29.cshtml" />
     <Content Include="Views\Kafka\Index.cshtml" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <Content Include="Views\Account\Register - bak.cshtml" />
@@ -541,44 +490,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508310051445_MySQL.resx">
-      <DependentUpon>201508310051445_MySQL.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201509092315420_ModuleInstallation.resx">
-      <DependentUpon>201509092315420_ModuleInstallation.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201510100632138_ModuleServerWithPrivateIP.resx">
-      <DependentUpon>201510100632138_ModuleServerWithPrivateIP.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601292352214_Add_PEM_To_Module.resx">
-      <DependentUpon>201601292352214_Add_PEM_To_Module.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601292358148_Add_PEM_To_PuppetServer.resx">
-      <DependentUpon>201601292358148_Add_PEM_To_PuppetServer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601300234276_Add_JobDir_To_PuppetServer.resx">
-      <DependentUpon>201601300234276_Add_JobDir_To_PuppetServer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201601300237452_Add_JobLocation_To_PuppetServer.resx">
-      <DependentUpon>201601300237452_Add_JobLocation_To_PuppetServer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602132238285_Add_KafkaServer.resx">
-      <DependentUpon>201602132238285_Add_KafkaServer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602192353055_Add_KafkaTopcis.resx">
-      <DependentUpon>201602192353055_Add_KafkaTopcis.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602271141196_Update_Storage.resx">
-      <DependentUpon>201602271141196_Update_Storage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201604250301539_Update_Storage1.resx">
-      <DependentUpon>201604250301539_Update_Storage1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609080723132_Add_PotentialCustomer.resx">
-      <DependentUpon>201609080723132_Add_PotentialCustomer.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201609080803134_Update_PotentialCustomer.resx">
-      <DependentUpon>201609080803134_Update_PotentialCustomer.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201610010430120_InitialCreate.resx">
+      <DependentUpon>201610010430120_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
