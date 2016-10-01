@@ -5,8 +5,8 @@
 
 It also comes with:
 - ```Easy Data Analysis using SQL on Hive, HBase, Spark```
-- ```Easy Dashboard and Charts Building using D3.js on Hive, HBase, Spark```
-- ```Easy Module Installation using Puppet ```
+- ```Easy Dashboard(s) and Chart(s) Building using D3.js on Hive, HBase, Spark```
+- ```Easy Module(s) Installation using Puppet ```
 
 
 #Current Available Tasks for Moving Data With A Simple Mouse Click:
