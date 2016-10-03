@@ -4,8 +4,7 @@
 
 
 It also comes with:
-- ```Easy Data Analysis using SQL on Hive, HBase, Spark```
-- ```Easy Dashboard(s) and Chart(s) Building using D3.js on Hive, HBase, Spark```
+- ```Data Analysis using SQL on Hive, HBase, Spark```
 - ```Easy Module(s) Installation using Puppet ```
 
 
