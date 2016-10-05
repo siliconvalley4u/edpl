@@ -12,7 +12,7 @@ namespace EnterpriseDataPipeline
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/select2.js",
                         "~/Scripts/DynamicScript.js",
-                        "~/Scripts/jquery-ui-1.11.1.js"));
+                        "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                                  "~/Scripts/jquery.validate*",

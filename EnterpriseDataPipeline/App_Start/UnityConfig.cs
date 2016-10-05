@@ -41,9 +41,9 @@ namespace EnterpriseDataPipeline.App_Start
             // container.RegisterType<IProductRepository, ProductRepository>();
 
             container.RegisterType<AccountController>(new InjectionConstructor());
-            //container.RegisterType<RolesAdminController>(new InjectionConstructor());
+            container.RegisterType<RolesAdminController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());
-            //container.RegisterType<UsersAdminController>(new InjectionConstructor());
+            container.RegisterType<UsersAdminController>(new InjectionConstructor());
 
         }
     }
