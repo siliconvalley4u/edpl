@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using DynamicMVC.Business.Attributes;
+//using DynamicMVC.Business.Attributes;
+using DynamicMVC.Annotations;
 
 namespace EnterpriseDataPipeline.Models
 {

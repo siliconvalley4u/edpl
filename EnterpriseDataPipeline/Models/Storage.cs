@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using DynamicMVC.Business.Attributes;
+//using DynamicMVC.Business.Attributes;
 
 using System.ComponentModel.DataAnnotations.Schema;
-
+using DynamicMVC.Annotations;
 
 namespace EnterpriseDataPipeline.Models
 {

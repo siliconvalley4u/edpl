@@ -1,13 +1,12 @@
-﻿@model object
-
-@using DynamicMVC.UI.ViewModels
+﻿@using DynamicMVC.UI.DynamicMVC.ViewModels.DynamicPropertyViewModels
+@model object
 @{
-    var customViewDataDictionary = (ViewDataDictionary)ViewData["CustomViewDataDictionary"];
-    var dynamicHyperlinkViewModel = (DynamicEditorHyperlinkViewModel)customViewDataDictionary["DynamicEditorHyperlinkViewModel"];
+    var dynamicPropertyViewModel = (DynamicPropertyEditorViewModel) ViewData["DynamicPropertyEditorViewModel"];
+    var dynamicHyperlinkViewModel = dynamicPropertyViewModel.DynamicEditorHyperlinkViewModel;
     var showHyperLink = dynamicHyperlinkViewModel != null;
-    if (customViewDataDictionary.ContainsKey("DisplayName") && ViewData.ModelMetadata.DisplayName == null)
+    if (!string.IsNullOrWhiteSpace(dynamicPropertyViewModel.DisplayName) && ViewData.ModelMetadata.DisplayName == null)
     {
-        ViewData.ModelMetadata.DisplayName = customViewDataDictionary["DisplayName"].ToString();
+        ViewData.ModelMetadata.DisplayName = dynamicPropertyViewModel.DisplayName;
     }
 }
 <div class="form-group">
@@ -15,7 +14,7 @@
     <div class="">
         @if (showHyperLink)
         {
-            @Html.ActionLink(dynamicHyperlinkViewModel.DisplayName, dynamicHyperlinkViewModel.ActionName, dynamicHyperlinkViewModel.ControllerName, dynamicHyperlinkViewModel.RouteValueDictionary, null)
+            @Html.ActionLink(dynamicHyperlinkViewModel.DisplayName, dynamicHyperlinkViewModel.ActionName, dynamicHyperlinkViewModel.ControllerName, dynamicHyperlinkViewModel.RouteValueDictionaryWrapper.GetRouteValueDictionary(), null)
             @Html.ValidationMessageFor(m => m)
         }
     </div>

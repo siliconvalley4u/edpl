@@ -1,4 +1,5 @@
-﻿@using DynamicMVC.Managers
+﻿@*@using DynamicMVC.Managers*@
+@using DynamicMVC.UI.DynamicMVC
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,14 +64,16 @@
                             </ul>
                         </li>
 
-                        @foreach (var menuItemViewModel in DynamicMVC.Managers.DynamicMVCManager.GetDynamicMenuItems())
+                        @*@foreach (var menuItemViewModel in DynamicMVC.Managers.DynamicMVCManager.GetDynamicMenuItems())*@
+                        @foreach (var menuItemViewModel in DynamicMVCContext.DynamicMvcManager.GetDynamicMenuItems())
                         {
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">@menuItemViewModel.DisplayName <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     @foreach (var childMenuViewModel in menuItemViewModel.DynamicMenuItemViewModels)
                                     {
-                                        <li><a href="@Url.Action("Index", childMenuViewModel.DynamicEntityMetadata.EntityMetadata.TypeName)">@(childMenuViewModel.DisplayName)</a></li>
+                                        @*<li><a href="@Url.Action("Index", childMenuViewModel.DynamicEntityMetadata.EntityMetadata.TypeName)">@(childMenuViewModel.DisplayName)</a></li>*@
+                                        <li><a href="@Url.Action("Index", childMenuViewModel.DynamicEntityMetadata.TypeName)">@(childMenuViewModel.DisplayName)</a></li>
                                     }
                                     @if (menuItemViewModel.DisplayName.Equals("Installer Admin"))
                                     {
@@ -84,16 +87,18 @@
                 else if (Request.IsAuthenticated && User.IsInRole("Installer"))
                 {
                     <ul class="nav navbar-nav navbar-right">
-                        @foreach (var menuItemViewModel in DynamicMVC.Managers.DynamicMVCManager.GetDynamicMenuItems())
+                        @*@foreach (var menuItemViewModel in DynamicMVC.Managers.DynamicMVCManager.GetDynamicMenuItems())*@
+                        @foreach (var menuItemViewModel in DynamicMVCContext.DynamicMvcManager.GetDynamicMenuItems())
                         {
                             if (@menuItemViewModel.DisplayName.Contains("Installer"))
-                            { 
+                            {
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">@menuItemViewModel.DisplayName <b class="caret"></b></a>
                                     <ul class="dropdown-menu">
                                         @foreach (var childMenuViewModel in menuItemViewModel.DynamicMenuItemViewModels)
                                         {
-                                            <li><a href="@Url.Action("Index", childMenuViewModel.DynamicEntityMetadata.EntityMetadata.TypeName)">@(childMenuViewModel.DisplayName)</a></li>
+                                            @*<li><a href="@Url.Action("Index", childMenuViewModel.DynamicEntityMetadata.EntityMetadata.TypeName)">@(childMenuViewModel.DisplayName)</a></li>*@
+                                            <li><a href="@Url.Action("Index", childMenuViewModel.DynamicEntityMetadata.TypeName)">@(childMenuViewModel.DisplayName)</a></li>
                                         }
                                     </ul>
                                 </li>

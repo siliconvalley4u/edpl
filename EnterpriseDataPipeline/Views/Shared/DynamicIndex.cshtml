@@ -1,9 +1,9 @@
-﻿@using DynamicMVC.UI.Extensions
-@model DynamicMVC.UI.ViewModels.DynamicIndexViewModel
+﻿@model DynamicMVC.UI.DynamicMVC.ViewModels.DynamicIndexViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = @Model.Title;
 }
+
 <style>
     .container {
         padding-left: 2px;
@@ -11,31 +11,26 @@
     }
 </style>
 <div class="container">
+    @Html.Partial("DynamicControls/_DisplayMessage", true)
     <div class="row hidden-xs">
         <h1>@Model.Header</h1>
     </div>
     <div id="MobileHeader" class="row visible-xs">
         <div class="col-xs-3">
-            @Ajax.ActionLink("Previous", "Index", Model.DynamicEntityMetadata.EntityMetadata.TypeName, Model.RouteValueDictionary.CloneAndAddPage(-1)
-                                      , new AjaxOptions { UpdateTargetId = "ajaxtable", Url = Url.Action("_Index", Model.DynamicEntityMetadata.EntityMetadata.TypeName, Model.RouteValueDictionary.CloneAndAddPage(-1)) }
-                                      , new { @class = "btn btn-primary", @style = "margin-top: 20px;", @id="mobilePrevious" })
+            @Html.Partial("DynamicControls/_PreviousMobileButton")
         </div>
         <div class="col-xs-6" style="text-align: center;">
-            <h3 style="margin-bottom: 0px;">@Model.Header</h3>
-            <h6 id="MobilePagingMessage" style="margin: 0px; font-size: 10px;"></h6>
-            <h6 style="margin: 0px; font-size: 8px;">@Model.GetFilterMessage()</h6>
+            <h3 style="margin-bottom: 0;">@Model.Header</h3>
+            <h6 id="MobilePagingMessage" style="margin: 0; font-size: 10px;"></h6>
+            <h6 style="margin: 0; font-size: 8px;">@Model.FilterMessage</h6>
         </div>
         <div class="col-xs-3" style="margin-top: 20px;">
-            @Ajax.ActionLink("Next", "Index", Model.DynamicEntityMetadata.EntityMetadata.TypeName, Model.RouteValueDictionary.CloneAndAddPage(1)
-                                      , new AjaxOptions { UpdateTargetId = "ajaxtable", Url = Url.Action("_Index", Model.DynamicEntityMetadata.EntityMetadata.TypeName, Model.RouteValueDictionary.CloneAndAddPage(1)) }
-                                      , new { @class = "btn btn-primary pull-right", @style = "vertical-align: bottom;", @id="mobileNext" })
+            @Html.Partial("DynamicControls/_NextMobileButton")
         </div>
     </div>
 </div>
-
-
 <div class="container">
-    @Html.Partial("_DynamicIndexFilters")
+    @Html.Partial("Partials/_DynamicIndexFilters", Model.DynamicIndexFiltersViewModel)
     <div id="ajaxtable" style="margin-top: 10px;">
         @* ReSharper disable once Mvc.ActionNotResolved *@
         @Html.Action("_Index")

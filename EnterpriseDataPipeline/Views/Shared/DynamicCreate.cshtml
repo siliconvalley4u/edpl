@@ -1,7 +1,8 @@
-﻿@model DynamicMVC.UI.ViewModels.DynamicCreateViewModel
+﻿@using DynamicMVC.UI.DynamicMVC.Helpers
+@model DynamicMVC.UI.DynamicMVC.ViewModels.DynamicCreateViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = Model.Title;
 }
 
 <div class="container">
@@ -11,16 +12,19 @@
 </div>
 
 <div class="container">
-    @using (Html.BeginForm("Create", Model.DynamicEntityMetadata.EntityMetadata.TypeName, new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { role = "form", @class = "form-horizontal" }))
+    @* ReSharper disable once RedundantAnonymousTypePropertyName *@
+    @using (Html.BeginForm("Create", Model.TypeName, new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { role = "form", @class = "form-horizontal" }))
     {
+        @Html.Partial("DynamicControls/_DisplayMessage", false)
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(false)
-        foreach (var dynamicPropertyViewModel in Model.GetDynamicPropertyViewModels())
+        foreach (var dynamicPropertyViewModel in Model.DynamicEditorViewModels)
         {
-            @Html.Editor(dynamicPropertyViewModel.CustomPropertyName, dynamicPropertyViewModel.DynamicEditorName, new { CustomViewDataDictionary = dynamicPropertyViewModel.ViewDataDictionary })
+            @Html.DynamicEditor(dynamicPropertyViewModel)
         }
         <div class="row">
-            <button type="submit" class="btn btn-default">Save</button>
+            <button type="submit" class="btn btn-default">@Model.ButtonText</button>
+            @Html.Partial("Partials/_DynamicUIMethods", Model.DynamicUIMethods)
         </div>
     }
 </div>

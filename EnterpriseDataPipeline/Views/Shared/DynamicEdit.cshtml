@@ -1,7 +1,8 @@
-﻿@model DynamicMVC.UI.ViewModels.DynamicEditViewModel
+﻿@using DynamicMVC.UI.DynamicMVC.Helpers
+@model DynamicMVC.UI.DynamicMVC.ViewModels.DynamicEditViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = Model.Title;
 }
 
 <div class="container">
@@ -11,18 +12,20 @@
 </div>
 
 <div class="container">
-    @using (Html.BeginForm("Edit", Model.DynamicEntityMetadata.EntityMetadata.TypeName, new { Model.ReturnUrl }, FormMethod.Post, new { role = "form", @class = "form-horizontal" }))
+    @using (Html.BeginForm("Edit", Model.TypeName, new { Model.ReturnUrl }, FormMethod.Post, new { role = "form", @class = "form-horizontal" }))
     {
+        @Html.Partial("DynamicControls/_DisplayMessage", false)
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(false)
 
         @Html.Hidden("Id")
-        foreach (var dynamicPropertyViewModel in Model.GetDynamicPropertyViewModels())
+        foreach (var dynamicEditorViewModel in Model.DynamicEditorViewModels)
         {
-            @Html.Editor(dynamicPropertyViewModel.CustomPropertyName, dynamicPropertyViewModel.DynamicEditorName, new { CustomViewDataDictionary = dynamicPropertyViewModel.ViewDataDictionary })
+            @Html.DynamicEditor(dynamicEditorViewModel)
         }
         <div class="row">
-            <button type="submit" class="btn btn-default">Save</button>
+            <button type="submit" class="btn btn-default">@Model.ButtonText</button>
+            @Html.Partial("Partials/_DynamicUIMethods", Model.DynamicUIMethods)
         </div>
     }
 </div>

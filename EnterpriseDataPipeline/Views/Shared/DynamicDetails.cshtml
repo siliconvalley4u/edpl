@@ -1,7 +1,8 @@
-﻿@model DynamicMVC.UI.ViewModels.DynamicDetailsViewModel
+﻿@using DynamicMVC.UI.DynamicMVC.Helpers
+@model DynamicMVC.UI.DynamicMVC.ViewModels.DynamicDetailsViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Title;
 }
 
 <div class="container">
@@ -11,13 +12,16 @@
 </div>
 
 <div class="container">
-    @using (Html.BeginForm("Details", Model.DynamicEntityMetadata.EntityMetadata.TypeName, null, FormMethod.Post, new { role = "form", @class = "form-horizontal" }))
+    @using (Html.BeginForm("Details", Model.TypeName, null, FormMethod.Post, new { role = "form", @class = "form-horizontal" }))
     {
+        @Html.Partial("DynamicControls/_DisplayMessage", false)
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(false)
-        foreach (var dynamicPropertyViewModel in Model.GetDynamicPropertyViewModels())
+    @Html.Hidden("Id")
+        foreach (var dynamicPropertyViewModel in Model.DynamicEditorViewModels)
         {
-            @Html.Editor(dynamicPropertyViewModel.CustomPropertyName, dynamicPropertyViewModel.DynamicEditorName, new { CustomViewDataDictionary = dynamicPropertyViewModel.ViewDataDictionary })
+            @Html.DynamicEditor(dynamicPropertyViewModel)
         }
+        @Html.Partial("Partials/_DynamicUIMethods", Model.DynamicUIMethods)
     }
 </div>
