@@ -40,11 +40,12 @@ namespace EnterpriseDataPipeline.App_Start
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
 
+            //Updated by Anthony Lai on 2016-10-05
+            //Register AccountController, RoleAdminController, ManageController and UserAdminController
             container.RegisterType<AccountController>(new InjectionConstructor());
             container.RegisterType<RolesAdminController>(new InjectionConstructor());
             container.RegisterType<ManageController>(new InjectionConstructor());
             container.RegisterType<UsersAdminController>(new InjectionConstructor());
-
         }
     }
 }
