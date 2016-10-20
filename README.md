@@ -15,7 +15,7 @@ It also comes with:
 ## Prerequisite:
 - Visual Studio Community 2015
 - .NET Framework 4.5 or higher
-- MySQL Server or PostgresSQL
+- PostgresSQL or MySQL Server
 - Hadoop Cluster with HDFS, Hive, HBase, Spark
 
 
