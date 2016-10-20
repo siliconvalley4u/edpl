@@ -9,13 +9,13 @@ It also comes with:
 
 
 #Current Available Tasks for Moving Data With A Simple Mouse Click:
-- ```MySQL/PostgresSQL => HDFS/Hive/HBase/Spark```
+- ```MySQL/PostgreSQL => HDFS/Hive/HBase/Spark```
 
 
 ## Prerequisite:
 - Visual Studio Community 2015
 - .NET Framework 4.5 or higher
-- PostgresSQL or MySQL Server
+- PostgreSQL or MySQL Server
 - Hadoop Cluster with HDFS, Hive, HBase, Spark
 
 
