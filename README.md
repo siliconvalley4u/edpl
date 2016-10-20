@@ -20,7 +20,7 @@ It also comes with:
 
 
 ## Enterprise Data Pipeline Setup
-Documentation for Enterprise Data Pipeline Setup can be found [here](https://github.com/siliconvalley4u/edpl/blob/master/edpl/EnterpriseDataPipeline/doc/Enterprise_Data_Pipeline_User_Guide.pdf)
+Documentation for Enterprise Data Pipeline Setup can be found [here](https://github.com/siliconvalley4u/edpl/raw/master/EnterpriseDataPipeline/doc/Enterprise_Data_Pipeline_User_Guide.pdf)
 
 
 ## Enterprise Data Pipeline Online Demo 
