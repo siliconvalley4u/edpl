@@ -443,7 +443,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="doc\Enterprise Data Pipeline User Guide.pdf" />
+    <Content Include="doc\Enterprise_Data_Pipeline_User_Guide.pdf" />
     <None Include="Properties\PublishProfiles\142.0.252.93.pubxml" />
     <None Include="Properties\PublishProfiles\sv4uDataPipeLine - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\sv4uDataPipeLine - Web Deploy.pubxml" />
