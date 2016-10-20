@@ -15,12 +15,12 @@ It also comes with:
 ## Prerequisite:
 - Visual Studio Community 2015
 - .NET Framework 4.5 or higher
-- MySQL Server or PostgresSQL
+- PostgresSQL or MySQL Server
 - Hadoop Cluster with HDFS, Hive, HBase, Spark
 
 
 ## Enterprise Data Pipeline Setup
-Documentation for Enterprise Data Pipeline Setup can be found [here]()
+Documentation for Enterprise Data Pipeline Setup can be found [here](edpl/EnterpriseDataPipeline/doc/Enterprise Data Pipeline User Guide.pdf)
 
 
 ## Enterprise Data Pipeline Online Demo 
