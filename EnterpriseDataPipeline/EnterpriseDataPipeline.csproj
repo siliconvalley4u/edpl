@@ -425,7 +425,7 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Content\Validation.css" />
-    <Content Include="doc\edpl_create_user_role.sql" />
+    <Content Include="doc\edpl_insert_user_admin.sql" />
     <Content Include="DynamicMVC_ReadMe.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
